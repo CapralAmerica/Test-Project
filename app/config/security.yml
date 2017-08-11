@@ -1,0 +1,30 @@
+
+security:
+    providers:
+          in_memory:
+                memory:
+                    users:
+                        john:
+                           roles: 'ROLE_ADMIN'
+
+
+    firewalls:
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: our_db_provider
+
+        guard_new_add:
+            pattern: /(add)
+            methods: [GET, POST]
+            anonymous: ~
+            http_basic: ~
+
+        access_control:
+          - { path: /add, roles: ROLE_ADMIN }
